@@ -1,9 +1,9 @@
-import Head from "next/head";
-import Footer from "../components/Footer";
-import styles from "../styles/Home.module.css";
-import { getAllPosts } from "../utils";
-import Image from "next/image";
-import Link from "next/link";
+import Head from "next/head"
+import Footer from "../components/Footer"
+import styles from "../styles/Home.module.css"
+import { getAllPosts } from "../utils"
+import Link from "next/link"
+import Image from "../components/Image"
 
 export default function Home({ allPosts }) {
   return (
@@ -27,13 +27,7 @@ export default function Home({ allPosts }) {
               <h5>{new Intl.DateTimeFormat().format(new Date(post.date))}</h5>
             </header>
             <section style={{ maxWidth: "600px" }}>
-              <Image
-                src={post.coverImage}
-                alt="Dynamic Routing"
-                width="100%"
-                height="100%"
-                layout="responsive"
-              />
+              <Image src={post.coverImage} alt="Dynamic Routing" />
               <p>{post.excerpt}</p>
             </section>
           </article>
@@ -41,7 +35,7 @@ export default function Home({ allPosts }) {
       </main>
       <Footer />
     </div>
-  );
+  )
 }
 
 export async function getStaticProps() {
@@ -52,9 +46,9 @@ export async function getStaticProps() {
     "author",
     "coverImage",
     "excerpt",
-  ]);
+  ])
 
   return {
     props: { allPosts },
-  };
+  }
 }

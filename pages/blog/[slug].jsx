@@ -1,35 +1,38 @@
-import { getAllPosts, getPostBySlug, markdownToHtml } from "../../utils";
-import ErrorPage from "next/error";
-import { useRouter } from "next/router";
-import Image from "next/image";
-import styles from "../../styles/Home.module.css";
+import { getAllPosts, getPostBySlug, markdownToHtml } from "../../utils"
+import ErrorPage from "next/error"
+import { useRouter } from "next/router"
+import styles from "../../styles/Home.module.css"
+import Image from "../../components/Image"
 
 const Post = ({ post }) => {
-  const router = useRouter();
+  const router = useRouter()
 
   if (!router.isFallback && !post?.slug) {
-    return <ErrorPage statusCode={404} />;
+    return <ErrorPage statusCode={404} />
   }
 
   return (
     <div className={styles.container}>
-      <article style={{ maxWidth: "600px" }}>
-        <header>
-          <h1>{post.title}</h1>
-        </header>
-        <section>
-          <Image
-            src={post.coverImage}
-            height="100%"
-            width="100%"
-            layout="responsive"
-          />
-          <div dangerouslySetInnerHTML={{ __html: post.content }} />
-        </section>
-      </article>
+      <main className={styles.main}>
+        <article
+          style={{
+            maxWidth: 680,
+            margin: "0 32px",
+            wordBreak: "break-word",
+            overflowWrap: "break-word",
+          }}>
+          <header>
+            <h1>{post.title}</h1>
+            <Image src={post.coverImage} alt={post.title} />
+          </header>
+          <section>
+            <div dangerouslySetInnerHTML={{ __html: post.content }} />
+          </section>
+        </article>
+      </main>
     </div>
-  );
-};
+  )
+}
 
 export const getStaticProps = async ({ params }) => {
   const post = getPostBySlug(params.slug, [
@@ -39,17 +42,17 @@ export const getStaticProps = async ({ params }) => {
     "author",
     "coverImage",
     "content",
-  ]);
+  ])
 
-  const content = await markdownToHtml(post.content || "");
+  const content = await markdownToHtml(post.content || "")
 
   return {
     props: { post: { ...post, content } },
-  };
-};
+  }
+}
 
 export const getStaticPaths = () => {
-  const posts = getAllPosts(["slug"]);
+  const posts = getAllPosts(["slug"])
 
   return {
     paths: posts.map((post) => {
@@ -57,10 +60,10 @@ export const getStaticPaths = () => {
         params: {
           slug: post.slug,
         },
-      };
+      }
     }),
     fallback: false,
-  };
-};
+  }
+}
 
-export default Post;
+export default Post
