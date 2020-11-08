@@ -5,6 +5,7 @@ const Image = ({ src, ...rest }) => {
   return (
     <div
       style={{
+        width: "100%",
         backgroundSize: "cover",
         backgroundImage: 'url("' + responsiveImage.placeholder + '")',
       }}>
@@ -12,8 +13,7 @@ const Image = ({ src, ...rest }) => {
         <img
           src={responsiveImage.src}
           srcSet={responsiveImage.srcSet}
-          height="100%"
-          width="100%"
+          width={"100%"}
           {...rest}
         />
       </picture>
